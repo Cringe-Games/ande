@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ande"
-run/main_scene="res://World.tscn"
+run/main_scene="res://scenes/startup_screen.tscn"
 config/icon="res://test_scene_res/player.png"
 
 [input]

@@ -1,0 +1,161 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/fonts/game_fonts/title_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/pixel_font.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/scroll_background.png" type="Texture" id=3]
+[ext_resource path="res://assets/sounds/start_background.ogg" type="AudioStream" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+var title_text = \"Adne\"
+var subtitle_text = \"Out of sight, out of control\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="Animation" id=2]
+resource_name = "color_animation"
+length = 6.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ContolsAnimation/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.4, 0.196078, 0.392157, 1 ), Color( 0.192157, 0.14902, 0.392157, 1 ), Color( 0.4, 0.196078, 0.392157, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ContolsAnimation/CallToAction:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5, 3, 4.5, 6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ContolsAnimation/scroll_background:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 5.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 501.064, 304.043 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_left = 0.00284398
+anchor_right = 1.00284
+anchor_bottom = 1.0
+margin_left = -2.91223
+margin_right = -6.90814
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContolsAnimation" type="AnimationPlayer" parent="."]
+autoplay = "color_animation"
+anims/color_animation = SubResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="ContolsAnimation"]
+modulate = Color( 0.4, 0.196078, 0.392157, 1 )
+anchor_left = 0.5
+anchor_top = 0.497
+anchor_right = 0.5
+anchor_bottom = 0.497
+margin_left = -512.0
+margin_top = -298.2
+margin_right = 512.0
+margin_bottom = 298.8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scroll_background" type="Sprite" parent="ContolsAnimation"]
+position = Vector2( 515, 290 )
+texture = ExtResource( 3 )
+offset = Vector2( 15, 0 )
+
+[node name="Title" type="Label" parent="ContolsAnimation"]
+anchor_top = -0.00307576
+anchor_bottom = -0.00307576
+margin_left = 248.963
+margin_top = 167.462
+margin_right = 804.963
+margin_bottom = 236.462
+custom_fonts/font = ExtResource( 1 )
+text = "Adne"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Subtitle" type="Label" parent="ContolsAnimation"]
+margin_left = 248.963
+margin_top = 253.098
+margin_right = 804.963
+margin_bottom = 286.098
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.636719, 0.0994873, 0.603142, 1 )
+text = "Out of control, out of sight"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CallToAction" type="Label" parent="ContolsAnimation"]
+anchor_top = 0.00184947
+anchor_bottom = 0.0685161
+margin_left = 258.95
+margin_top = 335.168
+margin_right = 814.95
+margin_bottom = 364.168
+custom_fonts/font = SubResource( 4 )
+text = "Press Enter..."
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
