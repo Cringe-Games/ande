@@ -19,7 +19,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if (Input.is_action_just_pressed(\"ui_accept\")):
-		print(\"StartupScreen: loading the first level...\")
+		pass
+		#get_tree().change_scene()
 "
 
 [sub_resource type="Animation" id=2]
@@ -105,7 +106,7 @@ __meta__ = {
 }
 
 [node name="scroll_background" type="Sprite" parent="ContolsAnimation"]
-position = Vector2( 515, 290 )
+position = Vector2( 501.064, 304.043 )
 texture = ExtResource( 3 )
 offset = Vector2( 15, 0 )
 
