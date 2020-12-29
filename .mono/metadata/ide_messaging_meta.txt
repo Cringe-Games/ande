@@ -1,2 +1,2 @@
-﻿61335
+﻿52802
 /Applications/Godot.app/Contents/MacOS/Godot
