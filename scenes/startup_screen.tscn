@@ -8,24 +8,19 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Control
 
-
-
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = \"text\"
-var title_text = \"Adne\"
-var subtitle_text = \"Out of sight, out of control\"
+const GAME_TITLE = \"Adne\"
+const GAME_SUBTITLE = \"Out of sight, out of control\"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-	
-
+	$ContolsAnimation/Title.text = GAME_TITLE
+	$ContolsAnimation/Subtitle.text = GAME_SUBTITLE
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if (Input.is_action_just_pressed(\"ui_accept\")):
+		pass
+		#get_tree().change_scene()
 "
 
 [sub_resource type="Animation" id=2]
@@ -111,7 +106,7 @@ __meta__ = {
 }
 
 [node name="scroll_background" type="Sprite" parent="ContolsAnimation"]
-position = Vector2( 515, 290 )
+position = Vector2( 501.064, 304.043 )
 texture = ExtResource( 3 )
 offset = Vector2( 15, 0 )
 
