@@ -2,19 +2,27 @@ extends KinematicBody2D
 
 # Constants
 const WALK_SPEED = 250
+const JUMP_FORCE = 400
 const GRAVITY = 1000.0
 
 var ANIMATIONS = {
 	"IDLE": "idle",
-	"WALK": "walk"
+	"WALK": "walk",
+	"JUMP": "jump"
 }
 
 # Variables
 var velocity = Vector2()
 
 func _ready():
+	$Animation.connect("animation_finished", self, "on_Animation_animation_finished")
 	# Init by playing the idle animation
 	$Animation.play(ANIMATIONS.IDLE)
+	
+func _on_Animation_animation_finished():
+	# If mid-air, stop any animations after jump is complete
+	if $Animation.animation == ANIMATIONS.JUMP and not is_on_floor():
+		$Animation.stop()
 
 func _physics_process(delta):
 	# Apply gravity while not on the floor
@@ -30,7 +38,8 @@ func _physics_process(delta):
 		
 		# Update animations
 		$Animation.flip_h = true
-		$Animation.play(ANIMATIONS.WALK)
+		if is_on_floor():
+			$Animation.play(ANIMATIONS.WALK)
 
 	elif Input.is_action_pressed("right"):
 		# Update speed
@@ -38,10 +47,16 @@ func _physics_process(delta):
 		
 		# Update animations
 		$Animation.flip_h = false
-		$Animation.play(ANIMATIONS.WALK)
+		if is_on_floor():
+			$Animation.play(ANIMATIONS.WALK)
 
 	else:
-		$Animation.play(ANIMATIONS.IDLE)
 		velocity.x = 0
+		if is_on_floor():
+			$Animation.play(ANIMATIONS.IDLE)
+		
+	if Input.is_action_pressed("up") and is_on_floor():
+		velocity.y = -JUMP_FORCE
+		$Animation.play(ANIMATIONS.JUMP)
 		
 	move_and_slide(velocity, Vector2.UP)

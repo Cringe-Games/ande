@@ -9,8 +9,7 @@ extents = Vector2( 439.314, 197.656 )
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 155.222, 266.401 )
-scale = Vector2( 2, 2 )
+position = Vector2( 231.603, 288.99 )
 
 [node name="TestFloor" type="StaticBody2D" parent="."]
 
