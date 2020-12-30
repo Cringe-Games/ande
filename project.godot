@@ -9,19 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
+"base": "Resource",
 "class": "LinkManager",
 "language": "GDScript",
 "path": "res://scripts/LinkManager.gd"
 }, {
 "base": "KinematicBody2D",
-"class": "Playable",
+"class": "Player",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
+}, {
+"base": "Player",
+"class": "Warrior",
+"language": "GDScript",
+"path": "res://scripts/Warrior.gd"
 } ]
 _global_script_class_icons={
 "LinkManager": "",
-"Playable": ""
+"Player": "",
+"Warrior": ""
 }
 
 [application]

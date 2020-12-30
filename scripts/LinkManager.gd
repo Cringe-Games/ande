@@ -1,39 +1,81 @@
-extends Node
+extends Resource
+
+signal on_connection_lost
 
 class_name LinkManager
 
-var Players : Array = []
-var current_player : Playable = null
+var main_player: Player
+var currently_active: Player
 
-func _activate_player_and_camera():
-	var current_player_camera : Camera2D = current_player.camera
-	
-	if current_player and current_player_camera:
-		current_player.is_active = true
-		current_player_camera.current = true
-	
-func link_new_playable(playable: Playable):
-	Players.append(playable)
-	
-	# Make current player inactive
-	if current_player:
-		current_player.is_active = false
-	
-	# Assign new current_player to be the last item in the array
-	current_player = Players[Players.size() - 1]
-	_activate_player_and_camera()
+var warriors: Array = []
+var available_links: Array = []
 
-func unlink_last_playable():
-	# If current player exists
-	if (current_player):
-		# Deactivate current_player
-		current_player.is_active = false
+func set_main_player(main_player: Player):
+	self.main_player = main_player
 	
-	# While more then one player is in the list
-	if (Players.size() > 1):
-		# Make sure to remove the last player from the list
-		Players.pop_back()
+	# Make the main player a currently active
+	currently_active = main_player
 	
-	# Reassign current player to a new playable object
-	current_player = Players[Players.size() - 1]
-	_activate_player_and_camera()
+func add_warriors(warriors: Array):
+	self.warriors = warriors
+	
+func get_available_links(space_state: Physics2DDirectSpaceState):
+	# Reset the list of links on every run
+	available_links = []
+
+	# Find all warriors that don't have intersections
+	for warrior in warriors:
+		var intersect_result: Dictionary = space_state.intersect_ray(main_player.position, warrior.position, [main_player, warrior])
+		var has_obstacle = intersect_result.has("position")
+		
+		if not has_obstacle:
+			available_links.append(warrior)
+	
+	# Make the list available for caller
+	return available_links
+	
+func has_links():
+	return available_links.size()
+	
+func check_connection(space_state: Physics2DDirectSpaceState):
+	# Always "true" for main_player
+	if is_main_player_active():
+		return true
+	
+	# Otherwise, cast a ray from currently active player to main character
+	var intersect_result: Dictionary = space_state.intersect_ray(currently_active.position, main_player.position, [currently_active, main_player])
+	var has_obstacle = intersect_result.has("position")
+	
+	# Notify any interested parties about connection loss
+	if has_obstacle:
+		emit_signal("on_connection_lost", currently_active)
+		
+		# Activate the main player
+		activate_main_player()
+	
+func is_main_player_active():
+	return currently_active == main_player
+	
+func _switch(player_object: Player, on_off: bool):
+	player_object.is_active = on_off
+	player_object.camera.current = on_off
+
+func activate_warrior(warrior: Warrior):
+	# Deactivate currently active player and its camera
+	_switch(currently_active, false)
+	
+	# Activate provided warrior
+	_switch(warrior, true)
+	
+	# Set the warrior as currently active
+	currently_active = warrior
+	
+func activate_main_player():
+	# Deactivate currently active if it's not a main player
+	_switch(currently_active, false)
+	
+	# Switch main player back on
+	_switch(main_player, true)
+	
+	# Update a currently active reference
+	currently_active = main_player

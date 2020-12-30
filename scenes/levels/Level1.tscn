@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://scripts/World.gd" type="Script" id=1]
-[ext_resource path="res://Warrior.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/tiles/bricks_plain.png" type="Texture" id=3]
-[ext_resource path="res://assets/tiles/bg_brick.png" type="Texture" id=4]
+[ext_resource path="res://assets/tiles/bg_brick.png" type="Texture" id=1]
+[ext_resource path="res://scripts/World.gd" type="Script" id=2]
+[ext_resource path="res://Warrior.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/tiles/bricks_plain.png" type="Texture" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -55,7 +55,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=17]
 0/name = "bricks_plain.png 0"
-0/texture = ExtResource( 3 )
+0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 256, 192 )
@@ -174,7 +174,7 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 0/z_index = 0
 
 [node name="World" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -183,7 +183,7 @@ margin_right = 1024.0
 margin_bottom = 608.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -198,5 +198,5 @@ tile_data = PoolIntArray( 65535, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0,
 [node name="SpawnLocation" type="Position2D" parent="."]
 position = Vector2( 20.0714, 64.5567 )
 
-[node name="Warrior" parent="." instance=ExtResource( 2 )]
+[node name="Warrior" parent="." instance=ExtResource( 3 )]
 position = Vector2( 432.214, 170.004 )
