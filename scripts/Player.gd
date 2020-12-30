@@ -1,8 +1,9 @@
 extends KinematicBody2D
 
 # Constants
-const WALK_SPEED = 250
-const JUMP_FORCE = 400
+const WALK_SPEED = 230
+const JUMP_FORCE = 300
+const JUMP_WALK_MODIFIER = 0.65
 const GRAVITY = 1000.0
 
 var ANIMATIONS = {
@@ -34,7 +35,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("left"):
 		# Update speed
-		velocity.x = -WALK_SPEED
+		velocity.x = -(WALK_SPEED if is_on_floor() else WALK_SPEED * JUMP_WALK_MODIFIER)
 		
 		# Update animations
 		$Animation.flip_h = true
@@ -43,7 +44,7 @@ func _physics_process(delta):
 
 	elif Input.is_action_pressed("right"):
 		# Update speed
-		velocity.x = WALK_SPEED
+		velocity.x = WALK_SPEED if is_on_floor() else WALK_SPEED * JUMP_WALK_MODIFIER
 		
 		# Update animations
 		$Animation.flip_h = false
