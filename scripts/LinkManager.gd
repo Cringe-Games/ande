@@ -10,11 +10,11 @@ var currently_active: Player
 var warriors: Array = []
 var available_links: Array = []
 
-func set_main_player(main_player: Player):
-	self.main_player = main_player
+func set_main_player(player: Player):
+	self.main_player = player
 	
 	# Make the main player a currently active
-	currently_active = main_player
+	currently_active = player
 	
 func add_warriors(warriors: Array):
 	self.warriors = warriors
