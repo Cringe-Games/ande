@@ -2,9 +2,9 @@ extends KinematicBody2D
 
 # Constants
 const WALK_SPEED = 230
-const JUMP_FORCE = 300
-const JUMP_WALK_MODIFIER = 0.65
-const GRAVITY = 1000.0
+const JUMP_FORCE = 230
+const JUMP_WALK_MODIFIER = 0.6
+const GRAVITY = 460.0
 
 var ANIMATIONS = {
 	"IDLE": "idle",
@@ -29,6 +29,8 @@ func _physics_process(delta):
 	# Apply gravity while not on the floor
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
+	elif velocity.y != 0:
+		velocity.y = 0
 	
 	var motion = velocity * delta;
 	move_and_collide(motion)
@@ -59,5 +61,9 @@ func _physics_process(delta):
 	if Input.is_action_pressed("up") and is_on_floor():
 		velocity.y = -JUMP_FORCE
 		$Animation.play(ANIMATIONS.JUMP)
+	
+	# Initiate fall when touching the ceiling
+	if is_on_ceiling():
+		velocity.y = 0
 		
 	move_and_slide(velocity, Vector2.UP)
