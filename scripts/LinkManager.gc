@@ -1,0 +1,30 @@
+tool
+extends Resource
+
+class_name LinkManagerBetter
+
+
+var main_player: Player
+var warriors: Array = []
+var available_links: Array = []
+
+func set_main_player(main_player: Player):
+	self.main_player = main_player
+	
+func add_warriors(warriors: Array):
+	self.warriors = warriors
+	
+func get_available_links(space_state):
+	# Reset the list of links on every run
+	available_links = []
+	
+	# Find all warriors that don't have intersections
+	for warrior in warriors:
+		var intersect_result: Dictionary = space_state.intersect_ray(main_player.position, warrior.position, [main_player, warrior])
+		var has_obstacle = intersect_result.has("position")
+		
+		if not has_obstacle:
+			available_links.append(warrior)
+	
+	# Make the list available for caller
+	return available_links
