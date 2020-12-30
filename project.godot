@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node",
+"class": "LinkManager",
+"language": "GDScript",
+"path": "res://scripts/LinkManager.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Playable",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+} ]
 _global_script_class_icons={
-
+"LinkManager": "",
+"Playable": ""
 }
 
 [application]
