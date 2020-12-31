@@ -40,6 +40,7 @@ func _on_link_connection_lost(lost_warrior: Warrior):
 	
 func _on_SwitchTween_all_completed():
 	link_manager.currently_active.camera.current = true
+	link_manager.enable_active()
 
 func start_switch_camera_tween(from: Camera2D, to: Camera2D):
 	# This methos should start a tween that moves SwitchCamera to a new position
@@ -81,4 +82,5 @@ func _process(_delta):
 			link_manager.activate_warrior(available_warrior)
 
 		if should_move_camera:
+			link_manager.currently_active.is_active = false
 			start_switch_camera_tween(old_target.camera, link_manager.currently_active.camera)
