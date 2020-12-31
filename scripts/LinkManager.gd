@@ -49,18 +49,16 @@ func check_connection(space_state: Physics2DDirectSpaceState):
 	# Notify any interested parties about connection loss
 	if has_obstacle:
 		emit_signal("on_connection_lost", currently_active)
-		
-		# Activate the main player
-		activate_main_player()
 	
 func is_main_player_active():
 	return currently_active == main_player
-	
+
 func _switch(player_object: Player, on_off: bool):
 	player_object.is_active = on_off
-	player_object.camera.current = on_off
+	# player_object.camera.current = on_off
 
 func activate_warrior(warrior: Warrior):
+	print("LinkManager: Activating warrior, ", warrior)
 	# Deactivate currently active player and its camera
 	_switch(currently_active, false)
 	
