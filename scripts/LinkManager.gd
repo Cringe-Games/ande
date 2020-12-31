@@ -9,6 +9,7 @@ var currently_active: Player
 
 var warriors: Array = []
 var available_links: Array = []
+var is_connection_available: bool = false
 
 func set_main_player(player: Player):
 	self.main_player = player

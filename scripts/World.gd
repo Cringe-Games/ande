@@ -32,11 +32,7 @@ func _on_link_connection_lost(lost_warrior: Warrior):
 	print("Connection lost with...", lost_warrior.position)
 	
 	link_manager.activate_main_player()
-	$CameraSwitcher.move_camera(
-		lost_warrior.camera, 
-		link_manager.main_player.camera,
-		self
-	)
+	$CameraSwitcher.move_camera(lost_warrior.camera, link_manager.main_player.camera)
 	
 func _on_SwitchTween_all_completed():
 	link_manager.currently_active.camera.current = true
@@ -45,7 +41,7 @@ func _on_SwitchTween_all_completed():
 func start_switch_camera_tween(from: Camera2D, to: Camera2D):
 	# This methos should start a tween that moves SwitchCamera to a new position
 	print("World: Starting a camera switch action...", from.get_camera_position(), to.get_camera_position())
-	$CameraSwitcher.move_camera(from, to, self)
+	$CameraSwitcher.move_camera(from, to)
 
 func _process(_delta):
 	var space_state = get_world_2d().direct_space_state
@@ -58,6 +54,10 @@ func _process(_delta):
 
 	if not link_manager.is_main_player_active() and not $CameraSwitcher.in_progress:
 		link_manager.check_connection(space_state)
+
+	# Links are available, draw the pointer line
+	$LinkDrawer.toggle(link_manager.has_links())
+	$LinkDrawer.draw_from_manager(link_manager)
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		# Don't allow switches while current camera movement is in progress

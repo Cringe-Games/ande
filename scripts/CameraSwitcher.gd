@@ -2,7 +2,7 @@ extends Node2D
 
 signal movement_completed
 
-export var CAMERA_MOVEMENT_DURATION = 1
+export var CAMERA_MOVEMENT_DURATION = 0.35
 
 var in_progress: bool = false
 
@@ -40,34 +40,38 @@ func _on_tween_all_completed():
 	in_progress = false
 	camera.queue_free()
 
-func move_camera(from_camera: Camera2D, to_camera: Camera2D, parent_node: Node):
+func move_camera(from_camera: Camera2D, to_camera: Camera2D):
 	if in_progress:
 		return false
 
 	in_progress = true
-	
+
 	var to = to_camera.get_camera_position()
 	var from = from_camera.get_camera_position()
 
-	print("CameraSwitcher: moving camera ", from, to)
-	
+	# Calculate relative movement speed, based on distance
+	var distance = from.distance_to(to)
+	var movement_velocity = CAMERA_MOVEMENT_DURATION - CAMERA_MOVEMENT_DURATION / distance
+
+	print("CameraSwitcher: moving camera ", from, to, movement_velocity)
+
 	# Create a new camera instance
 	camera = _spawn_camera_instance()
 	# Set the position for new camera
 	camera.position = from
 	# Set the camera on the parent object
-	parent_node.add_child(camera)
+	add_child(camera)
 	# Make the camera current
 	camera.current = true
 
 	# Start a tween
-	$CameraMotionTween.interpolate_property(camera, "position", from, to, CAMERA_MOVEMENT_DURATION, Tween.TRANS_LINEAR)
+	$CameraMotionTween.interpolate_property(camera, "position", from, to, movement_velocity, Tween.TRANS_LINEAR)
 	$CameraMotionTween.start()
-	
+
 func setup_camera_config_from(origin: Camera2D):
 	# Inherit zoom property by duplicating origin camera zoom vector
 	camera_zoom = Vector2(origin.zoom)
-	
+
 	# Inherit origin camera limits
 	camera_limit_top = origin.limit_top
 	camera_limit_left = origin.limit_left
@@ -76,9 +80,9 @@ func setup_camera_config_from(origin: Camera2D):
 
 func _spawn_camera_instance():
 	var camera = Camera2D.new()
-	
+
 	camera.zoom = camera_zoom
-	
+
 	camera.limit_top = camera_limit_top
 	camera.limit_left = camera_limit_left
 	camera.limit_right = camera_limit_right
