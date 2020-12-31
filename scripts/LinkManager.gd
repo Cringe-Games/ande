@@ -9,7 +9,8 @@ var currently_active: Player
 
 var warriors: Array = []
 var available_links: Array = []
-var is_connection_available: bool = false
+
+const LINK_DISTANCE_LIMIT = 200
 
 func set_main_player(player: Player):
 	self.main_player = player
@@ -27,9 +28,11 @@ func get_available_links(space_state: Physics2DDirectSpaceState):
 	# Find all warriors that don't have intersections
 	for warrior in warriors:
 		var intersect_result: Dictionary = space_state.intersect_ray(main_player.position, warrior.position, [main_player, warrior])
-		var has_obstacle = intersect_result.has("position")
 		
-		if not has_obstacle:
+		var has_obstacle = intersect_result.has("position")
+		var within_range = main_player.position.distance_to(warrior.position) < LINK_DISTANCE_LIMIT
+		
+		if not has_obstacle and within_range:
 			available_links.append(warrior)
 	
 	# Make the list available for caller
@@ -46,9 +49,10 @@ func check_connection(space_state: Physics2DDirectSpaceState):
 	# Otherwise, cast a ray from currently active player to main character
 	var intersect_result: Dictionary = space_state.intersect_ray(currently_active.position, main_player.position, [currently_active, main_player])
 	var has_obstacle = intersect_result.has("position")
+	var within_range = currently_active.position.distance_to(main_player.position) < LINK_DISTANCE_LIMIT
 	
 	# Notify any interested parties about connection loss
-	if has_obstacle:
+	if has_obstacle or not within_range:
 		emit_signal("on_connection_lost", currently_active)
 	
 func is_main_player_active():
