@@ -15,16 +15,10 @@ const GAME_SUBTITLE = \"Out of sight, out of control\"
 func _ready():
 	$ContolsAnimation/Title.text = GAME_TITLE
 	$ContolsAnimation/Subtitle.text = GAME_SUBTITLE
-	
-	# Load all level files
-	LevelLoader.load_all_levels()
-	
-	print(LevelLoader._levels)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if (Input.is_action_just_pressed(\"ui_accept\")):
-		LevelLoader.load_next()
+	pass
 "
 
 [sub_resource type="Animation" id=2]
