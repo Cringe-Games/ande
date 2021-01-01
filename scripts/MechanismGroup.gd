@@ -8,56 +8,41 @@ onready var door_tween: Tween = $DoorTween
 
 onready var door_rect: ColorRect = $Door/ColorRect
 onready var door_rect_height: float = door_rect.rect_size.y
+onready var door_position_open: Vector2 = door.position - Vector2(0, door_rect.rect_size.y);
+onready var door_position_closed: Vector2 = door.position;
 
-var is_open: bool = false
-var in_progress: bool = false
 var currently_stepping: Array = []
 
 func _ready():
-	$"../Debug".add_field("Players on a button: ", "_mg_p_")
-
 	handler.connect("body_entered", self, "_on_Handler_body_entered")
 	handler.connect("body_exited", self, "_on_Handler_body_exited")
-	door_tween.connect("tween_all_completed", self, "_on_DoorTween_all_completed")
 	
-func _process(_delta):
-	$"../Debug".update_field("_mg_p_", currently_stepping.size())
-	is_open = currently_stepping.size() > 0
+func is_open():
+	return door.position == door_position_open
 	
-	
-func _on_DoorTween_all_completed():
-	in_progress = false
-	
-func _on_Handler_body_entered(body):
-	# Add a new body to a list of bodies that are currently stepping on a button
-	if body is Player:
-		currently_stepping.append(body)
+func is_someone_standing():
+	return currently_stepping.size() > 0
 
-	if body is Player and currently_stepping.size() > 0 and not is_open and not in_progress:
-		in_progress = true
+func _on_Handler_body_entered(body):
+	if body is Player:
+		# Add a new body to a list of bodies that are currently stepping on a button
+		currently_stepping.append(body)
 		
-		# Detect all necessary positions
-		var current_position: Vector2 = door.position
-		var end_position: Vector2 = door.position - Vector2(0, door_rect_height)
-		
-		# Open up the door smoothly
-		door_tween.interpolate_property(door, "position", current_position, end_position, OPEN_ANIMATION_DURATION)
-		door_tween.start()
-		
+		# Open the door while someone is stending on a handler and it's not already open (DUH)
+		if is_someone_standing() and not is_open():
+			# Open up the door smoothly
+			_move(door.position, door_position_open)
+
 func _on_Handler_body_exited(body):
 	if body is Player:
 		# Remove the leaving body from the list
-		var body_index = currently_stepping.find(body)
-		if body_index != -1:
-			currently_stepping.remove(body_index)
+		currently_stepping.remove(currently_stepping.find(body))
 
-	if body is Player and currently_stepping.size() == 0 and not in_progress:
-		in_progress = true
-		
-		# Calculate all necessary positions
-		var current_position: Vector2 = door.position
-		var end_position: Vector2 = door.position + Vector2(0, door_rect_height)
-		
-		# Close down the door smoothly
-		door_tween.interpolate_property($Door, "position", current_position, end_position, OPEN_ANIMATION_DURATION)
-		door_tween.start()
+		# Close the door whenever there's no one standing on a door
+		if not is_someone_standing():
+			# Close down the door smoothly
+			_move(door.position, door_position_closed)
+
+func _move(from: Vector2, to: Vector2):
+	door_tween.interpolate_property($Door, "position", from, to, OPEN_ANIMATION_DURATION)
+	door_tween.start()

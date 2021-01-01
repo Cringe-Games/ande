@@ -1,6 +1,6 @@
 extends Node2D
 
-const PlayerFactory : PackedScene = preload("res://Player.tscn")
+const PlayerFactory : PackedScene = preload("res://scenes/playables/Player.tscn")
 onready var link_manager : LinkManager = LinkManager.new()
 
 func _ready():
