@@ -10,11 +10,13 @@ var currently_active: Player
 var warriors: Array = []
 var available_links: Array = []
 
-func set_main_player(main_player: Player):
-	self.main_player = main_player
+const LINK_DISTANCE_LIMIT = 200
+
+func set_main_player(player: Player):
+	self.main_player = player
 	
 	# Make the main player a currently active
-	currently_active = main_player
+	currently_active = player
 	
 func add_warriors(warriors: Array):
 	self.warriors = warriors
@@ -26,9 +28,11 @@ func get_available_links(space_state: Physics2DDirectSpaceState):
 	# Find all warriors that don't have intersections
 	for warrior in warriors:
 		var intersect_result: Dictionary = space_state.intersect_ray(main_player.position, warrior.position, [main_player, warrior])
-		var has_obstacle = intersect_result.has("position")
 		
-		if not has_obstacle:
+		var has_obstacle = intersect_result.has("position")
+		var within_range = main_player.position.distance_to(warrior.position) < LINK_DISTANCE_LIMIT
+		
+		if not has_obstacle and within_range:
 			available_links.append(warrior)
 	
 	# Make the list available for caller
@@ -45,22 +49,20 @@ func check_connection(space_state: Physics2DDirectSpaceState):
 	# Otherwise, cast a ray from currently active player to main character
 	var intersect_result: Dictionary = space_state.intersect_ray(currently_active.position, main_player.position, [currently_active, main_player])
 	var has_obstacle = intersect_result.has("position")
+	var within_range = currently_active.position.distance_to(main_player.position) < LINK_DISTANCE_LIMIT
 	
 	# Notify any interested parties about connection loss
-	if has_obstacle:
+	if has_obstacle or not within_range:
 		emit_signal("on_connection_lost", currently_active)
-		
-		# Activate the main player
-		activate_main_player()
 	
 func is_main_player_active():
 	return currently_active == main_player
-	
+
 func _switch(player_object: Player, on_off: bool):
 	player_object.is_active = on_off
-	player_object.camera.current = on_off
 
 func activate_warrior(warrior: Warrior):
+	print("LinkManager: Activating warrior, ", warrior)
 	# Deactivate currently active player and its camera
 	_switch(currently_active, false)
 	
@@ -79,3 +81,11 @@ func activate_main_player():
 	
 	# Update a currently active reference
 	currently_active = main_player
+
+func disable_active():
+	currently_active.is_active = false
+	currently_active.camera.current = false
+
+func enable_active():
+	currently_active.is_active = true
+	currently_active.camera.current = true
