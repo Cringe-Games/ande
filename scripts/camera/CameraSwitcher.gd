@@ -2,7 +2,7 @@ extends Node2D
 
 signal movement_completed
 
-export var CAMERA_MOVEMENT_DURATION = 0.35
+export var CAMERA_MOVEMENT_DURATION = 0.15
 
 var in_progress: bool = false
 

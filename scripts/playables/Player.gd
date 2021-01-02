@@ -26,6 +26,9 @@ var debug_alias_prefix: String = "_p_"
 var DEBUG_CAMERA_POS = debug_alias_prefix + "c_pos"
 var DEBUG_PLAYER_POS = debug_alias_prefix + "p_pos"
 
+const DEFAULT_MODULATE_COLOR: Color = Color(1, 1, 1, 1)
+const INACTIVE_MODULATE_COLOR: Color = Color(0.1, 0.1, 0.1, 1)
+
 func _ready():
 	$"../Debug".add_field(debug_key + " camera pos", DEBUG_CAMERA_POS)
 	$"../Debug".add_field(debug_key + " player pos", DEBUG_PLAYER_POS)
@@ -33,6 +36,9 @@ func _ready():
 	$Animation.connect("animation_finished", self, "_on_Animation_animation_finished")
 	# Init by playing the idle animation
 	$Animation.play(ANIMATIONS.IDLE)
+	
+	# Make sure modulate reflects initial is_active state
+	_update_modulate()
 	
 func _on_Animation_animation_finished():
 	# If mid-air, stop any animations after jump is complete
@@ -42,11 +48,20 @@ func _on_Animation_animation_finished():
 func can_handle_input():
 	return is_active
 
+func update_active_state(new_value: bool):
+	is_active = new_value
+
+	# Update current player modulate to visually notify the activity change
+	_update_modulate()
+
+func _update_modulate():
+	modulate = DEFAULT_MODULATE_COLOR if is_active else INACTIVE_MODULATE_COLOR
+
 func handle_input():
 	if can_handle_input() and Input.is_action_pressed("left"):
 		# Update speed
 		velocity.x = -(WALK_SPEED if is_on_floor() else WALK_SPEED * JUMP_WALK_MODIFIER)
-		
+
 		# Update animations
 		$Animation.flip_h = true
 		if is_on_floor():
