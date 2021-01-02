@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/platformer_door.png-00e51c9ff76042f3688a07583aba2616.stex"
+path="res://.import/platformer_door.png-95fc719a86ec56afd458f293d9c99ffc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/platformer_door.png"
-dest_files=[ "res://.import/platformer_door.png-00e51c9ff76042f3688a07583aba2616.stex" ]
+source_file="res://Assets/platformer_door.png"
+dest_files=[ "res://.import/platformer_door.png-95fc719a86ec56afd458f293d9c99ffc.stex" ]
 
 [params]
 

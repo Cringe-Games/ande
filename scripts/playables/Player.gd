@@ -36,10 +36,10 @@ func _ready():
 	$Animation.connect("animation_finished", self, "_on_Animation_animation_finished")
 	# Init by playing the idle animation
 	$Animation.play(ANIMATIONS.IDLE)
-	
+
 	# Make sure modulate reflects initial is_active state
 	_update_modulate()
-	
+
 func _on_Animation_animation_finished():
 	# If mid-air, stop any animations after jump is complete
 	if $Animation.animation == ANIMATIONS.JUMP and not is_on_floor():
@@ -106,6 +106,3 @@ func _physics_process(delta):
 		velocity.y = 0
 
 	move_and_slide(velocity, Vector2.UP)
-
-	# Manually forcing update
-	# $Camera2D.force_update_scroll()

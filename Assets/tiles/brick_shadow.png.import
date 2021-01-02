@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/brick_shadow.png-a70a93775c6f3dac16922868dd96b1af.stex"
+path="res://.import/brick_shadow.png-282ad4c258c65af8f0c7ae0bd77c8dfb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/brick_shadow.png"
-dest_files=[ "res://.import/brick_shadow.png-a70a93775c6f3dac16922868dd96b1af.stex" ]
+source_file="res://Assets/tiles/brick_shadow.png"
+dest_files=[ "res://.import/brick_shadow.png-282ad4c258c65af8f0c7ae0bd77c8dfb.stex" ]
 
 [params]
 
