@@ -59,7 +59,7 @@ func is_main_player_active():
 	return currently_active == main_player
 
 func _switch(player_object: Player, on_off: bool):
-	player_object.is_active = on_off
+	player_object.update_active_state(on_off)
 
 func activate_warrior(warrior: Warrior):
 	print("LinkManager: Activating warrior, ", warrior)
@@ -83,9 +83,9 @@ func activate_main_player():
 	currently_active = main_player
 
 func disable_active():
-	currently_active.is_active = false
+	currently_active.update_active_state(false)
 	currently_active.camera.current = false
 
 func enable_active():
-	currently_active.is_active = true
+	currently_active.update_active_state(true)
 	currently_active.camera.current = true

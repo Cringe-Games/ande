@@ -84,5 +84,5 @@ func _process(_delta):
 			link_manager.activate_warrior(available_warrior)
 
 		if should_move_camera:
-			link_manager.currently_active.is_active = false
+			link_manager.currently_active.update_active_state(false)
 			start_switch_camera_tween(old_target.camera, link_manager.currently_active.camera)
