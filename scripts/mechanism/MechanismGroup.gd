@@ -6,7 +6,7 @@ onready var door: StaticBody2D = $Door
 onready var handler: Area2D = $Handler
 onready var door_tween: Tween = $DoorTween
 
-onready var door_rect: ColorRect = $Door/ColorRect
+onready var door_rect: TextureRect = $Door/TextureRect
 onready var door_rect_height: float = door_rect.rect_size.y
 onready var door_position_open: Vector2 = door.position - Vector2(0, door_rect.rect_size.y);
 onready var door_position_closed: Vector2 = door.position;

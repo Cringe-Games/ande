@@ -35,7 +35,6 @@ func _on_tween_step(_obj, _key, _elapsed, value):
 	$"../Debug".update_field("_c_switch_stepping", value)
 
 func _on_tween_all_completed():
-	print("CameraSwitcher: emmitting `movement_completed` signal")
 	emit_signal("movement_completed")
 	in_progress = false
 	camera.queue_free()
@@ -52,8 +51,6 @@ func move_camera(from_camera: Camera2D, to_camera: Camera2D):
 	# Calculate relative movement speed, based on distance
 	var distance = from.distance_to(to)
 	var movement_velocity = CAMERA_MOVEMENT_DURATION - CAMERA_MOVEMENT_DURATION / distance
-
-	print("CameraSwitcher: moving camera ", from, to, movement_velocity)
 
 	# Create a new camera instance
 	camera = _spawn_camera_instance()

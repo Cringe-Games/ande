@@ -62,7 +62,6 @@ func _switch(player_object: Player, on_off: bool):
 	player_object.update_active_state(on_off)
 
 func activate_warrior(warrior: Warrior):
-	print("LinkManager: Activating warrior, ", warrior)
 	# Deactivate currently active player and its camera
 	_switch(currently_active, false)
 	
