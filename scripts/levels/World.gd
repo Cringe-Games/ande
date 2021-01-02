@@ -1,6 +1,6 @@
 extends Node2D
 
-const PlayerFactory : PackedScene = preload("res://Player.tscn")
+const PlayerFactory : PackedScene = preload("res://scenes/playables/Player.tscn")
 onready var link_manager : LinkManager = LinkManager.new()
 
 func _ready():
@@ -19,6 +19,8 @@ func _ready():
 	main_player.position = $SpawnLocation.position
 	# Add main player to the scene
 	add_child(main_player)
+	# And, remove the spawn location, since it's no longer necessary
+	$SpawnLocation.queue_free()
 
 	# Populate link manager with the required data and let it do its magic!
 	link_manager.set_main_player(main_player)

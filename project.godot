@@ -12,17 +12,17 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "LinkManager",
 "language": "GDScript",
-"path": "res://scripts/LinkManager.gd"
+"path": "res://scripts/link/LinkManager.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scripts/Player.gd"
+"path": "res://scripts/playables/Player.gd"
 }, {
 "base": "Player",
 "class": "Warrior",
 "language": "GDScript",
-"path": "res://scripts/Warrior.gd"
+"path": "res://scripts/playables/Warrior.gd"
 } ]
 _global_script_class_icons={
 "LinkManager": "",
@@ -35,6 +35,10 @@ _global_script_class_icons={
 config/name="ande"
 run/main_scene="res://scenes/startup_screen.tscn"
 config/icon="res://test_scene_res/player.png"
+
+[autoload]
+
+LevelLoader="*res://scripts/levels/LevelLoader.gd"
 
 [input]
 
