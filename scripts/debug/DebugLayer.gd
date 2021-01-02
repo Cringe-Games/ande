@@ -2,10 +2,15 @@ extends CanvasLayer
 
 var fields: Dictionary = {}
 
+const ENABLED: bool = false
+
 func _ready():
 	$Control/Background.rect_size = Vector2($Control.rect_size.x, 0)
 
 func add_field(key, alias: String = ""):
+	if not ENABLED:
+		return
+
 	var field_key_label = Label.new()
 	var field_value_label = Label.new()
 	var field_wrapper = HBoxContainer.new()
@@ -23,5 +28,5 @@ func add_field(key, alias: String = ""):
 	$Control/Background.rect_size.y += 50
 	
 func update_field(key, value):
-	if (fields.has(key)):
+	if (ENABLED and fields.has(key)):
 		fields[key].text = str(value)
