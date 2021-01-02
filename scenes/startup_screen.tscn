@@ -18,8 +18,6 @@ func _ready():
 	
 	# Load all level files
 	LevelLoader.load_all_levels()
-	
-	print(LevelLoader._levels)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

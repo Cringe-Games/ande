@@ -30,10 +30,9 @@ func _ready():
 	$CameraSwitcher.setup_camera_config_from(main_player.camera)
 
 func _on_link_connection_lost(lost_warrior: Warrior):
-	# This method should just start the tween
-	print("Connection lost with...", lost_warrior.position)
-	
+	# Activate the main player
 	link_manager.activate_main_player()
+	# Start the tween
 	$CameraSwitcher.move_camera(lost_warrior.camera, link_manager.main_player.camera)
 	
 func _on_SwitchTween_all_completed():
@@ -42,7 +41,6 @@ func _on_SwitchTween_all_completed():
 
 func start_switch_camera_tween(from: Camera2D, to: Camera2D):
 	# This methos should start a tween that moves SwitchCamera to a new position
-	print("World: Starting a camera switch action...", from.get_camera_position(), to.get_camera_position())
 	$CameraSwitcher.move_camera(from, to)
 
 func _process(_delta):
