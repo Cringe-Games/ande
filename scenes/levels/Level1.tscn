@@ -10,9 +10,6 @@
 [ext_resource path="res://scripts/mechanism/MechanismGroup.gd" type="Script" id=8]
 [ext_resource path="res://scripts/levels/LevelFinish.gd" type="Script" id=9]
 
-
-
-
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
@@ -181,13 +178,13 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 } ]
 0/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=20]
+[sub_resource type="RectangleShape2D" id=18]
 extents = Vector2( 20.8069, 20.0959 )
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 10.0318, 32.6172 )
 
-[sub_resource type="RectangleShape2D" id=19]
+[sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 12.6737, 5.25433 )
 
 [node name="World" type="Node2D"]
@@ -232,7 +229,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelFinish"]
 position = Vector2( 739.565, 326.429 )
-shape = SubResource( 20 )
+shape = SubResource( 18 )
 
 [node name="SpawnLocation" type="Position2D" parent="."]
 position = Vector2( 20.0714, 64.5567 )
@@ -268,7 +265,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MechanismGroup/Door"]
 position = Vector2( -9.87689, 12.4375 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="Handler" type="Area2D" parent="MechanismGroup"]
 position = Vector2( 180.428, 100.488 )
@@ -293,7 +290,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MechanismGroup/Handler"]
 position = Vector2( 0.638031, 0 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="DoorTween" type="Tween" parent="MechanismGroup"]
 
@@ -316,7 +313,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MechanismGroup2/Door"]
 position = Vector2( -9.87689, 12.4375 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="Handler" type="Area2D" parent="MechanismGroup2"]
 position = Vector2( 363.145, 355.185 )
@@ -341,6 +338,6 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MechanismGroup2/Handler"]
 position = Vector2( 0.638031, 0 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="DoorTween" type="Tween" parent="MechanismGroup2"]

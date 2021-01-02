@@ -39,12 +39,12 @@ func load_next():
 	if (_current_level_index == get_scene_count()):
 		# Load the end screen now
 		get_tree().change_scene_to(end_screen)
-	
-	# Otherwise, loading the next available level
-	var next_level = _levels[_current_level_index]
-	
-	# Increment the scene index
-	_current_level_index += 1
-	
-	# Load and replace current scene with the next one
-	get_tree().change_scene(next_level)
+	else:
+		# Otherwise, loading the next available level
+		var next_level = _levels[_current_level_index]
+		
+		# Increment the scene index
+		_current_level_index += 1
+		
+		# Load and replace current scene with the next one
+		get_tree().change_scene(next_level)
