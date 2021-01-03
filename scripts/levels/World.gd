@@ -59,6 +59,9 @@ func _process(_delta):
 	$LinkDrawer.toggle(link_manager.has_links())
 	$LinkDrawer.draw_from_manager(link_manager)
 	
+	if Input.is_action_just_pressed("restart"):
+		LevelLoader.reload_current()
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		# Don't allow switches while current camera movement is in progress
 		if $CameraSwitcher.in_progress:
