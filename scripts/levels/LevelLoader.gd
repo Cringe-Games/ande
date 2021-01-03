@@ -34,6 +34,10 @@ func load_all_levels():
 func get_scene_count():
 	return _levels.size()
 	
+func reload_current():	
+	# Reloading current level
+	get_tree().reload_current_scene()
+	
 func load_next():
 	# We've reached the last level scene
 	if (_current_level_index == get_scene_count()):
