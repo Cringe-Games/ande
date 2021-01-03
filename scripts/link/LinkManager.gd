@@ -60,6 +60,8 @@ func is_main_player_active():
 
 func _switch(player_object: Player, on_off: bool):
 	player_object.update_active_state(on_off)
+	
+	player_object.camera.current = on_off
 
 func activate_warrior(warrior: Warrior):
 	# Deactivate currently active player and its camera
