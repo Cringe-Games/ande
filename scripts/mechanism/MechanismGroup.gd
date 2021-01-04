@@ -10,12 +10,18 @@ onready var door_rect: TextureRect = $Door/TextureRect
 onready var door_rect_height: float = door_rect.rect_size.y
 onready var door_position_open: Vector2 = door.position - Vector2(0, door_rect.rect_size.y);
 onready var door_position_closed: Vector2 = door.position;
+export var is_horizontal:bool = false;
 
 var currently_stepping: Array = []
 
 func _ready():
 	handler.connect("body_entered", self, "_on_Handler_body_entered")
 	handler.connect("body_exited", self, "_on_Handler_body_exited")
+	if $Handler2:
+		$Handler2.connect("body_entered", self, "_on_Handler_body_entered")
+		$Handler2.connect("body_exited", self, "_on_Handler_body_exited")
+	if is_horizontal:
+		door_position_open = door.position - Vector2(door_rect.rect_size.y, 0);
 	
 func is_open():
 	return door.position == door_position_open
