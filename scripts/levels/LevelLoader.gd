@@ -26,6 +26,11 @@ func _get_all_scene_files():
 			
 	# Stopped looping trough files, probably closing the stream or whatever
 	directory.list_dir_end()
+	
+	# Make sure all levels are loaded in correct order by sorting the list at the end
+	_levels.sort()
+	
+	print("Loaded all levels: ", _levels)
 
 func load_all_levels():
 	# Somehow fetch all scenes from in the scenes/levels
